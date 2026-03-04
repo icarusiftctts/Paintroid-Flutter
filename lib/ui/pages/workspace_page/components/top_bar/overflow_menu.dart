@@ -225,7 +225,7 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                         ),
                         Switch(
                           value: state.antialiasing,
-                          activeThumbColor:
+                          activeColor:
                           CustomColors.deepTeal,
                           activeTrackColor:
                           CustomColors.oceanTeal,
@@ -256,7 +256,7 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                         ),
                         Switch(
                           value: state.smoothing,
-                          activeThumbColor:
+                          activeColor:
                           CustomColors.deepTeal,
                           activeTrackColor:
                           CustomColors.oceanTeal,
