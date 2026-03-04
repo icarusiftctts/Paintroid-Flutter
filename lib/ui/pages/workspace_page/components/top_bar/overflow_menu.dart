@@ -183,14 +183,117 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
   }
 
   Future<void> _advancedOptions(BuildContext context) async {
+
+    bool antialiasing = false;
+    bool smoothing = false;
+
     showDialog(
-        context: context,
-        builder: (_) {
-          return StatefulBuilder(
-              builder: (context, setState) {
-                return Dialog();
-          });
-        }
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Container(
+                width: 300,
+                padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Advanced settings",
+                        style: TextStyle(
+                          color: Colors.teal.shade700,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 18),
+
+                    // Anti-aliasing Switch
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Antialiasing",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Switch(
+                          value: antialiasing,
+                          activeColor: Colors.teal,
+                          activeTrackColor: Colors.teal.shade200,
+                          materialTapTargetSize:
+                          MaterialTapTargetSize.shrinkWrap,
+                          onChanged: (v) {
+                            setState(() => antialiasing = v);
+                          },
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 6),
+
+                    // Smoothing Switch
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Smoothing",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Switch(
+                          value: smoothing,
+                          activeColor: Colors.teal,
+                          activeTrackColor: Colors.teal.shade200,
+                          materialTapTargetSize:
+                          MaterialTapTargetSize.shrinkWrap,
+                          onChanged: (v) {
+                            setState(() => smoothing = v);
+                          },
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // ACTION BUTTONS
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text(
+                            "CANCEL",
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        TextButton(
+                          onPressed: () async {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
