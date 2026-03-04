@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oxidized/oxidized.dart';
+import 'package:paintroid/core/utils/advanced_options_preference.dart';
 import 'package:toast/toast.dart';
 
 import 'package:paintroid/core/database/project_database.dart';
@@ -184,8 +185,9 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
 
   Future<void> _advancedOptions(BuildContext context) async {
 
-    bool antialiasing = false;
-    bool smoothing = false;
+    final service = AdvancedOptionsService();
+    bool antialiasing = await service.getAntialiasing();
+    bool smoothing = await service.getSmoothing();
 
     showDialog(
       context: context,
@@ -207,7 +209,7 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Advanced settings",
+                        'Advanced settings',
                         style: TextStyle(
                           color: Colors.teal.shade700,
                           fontSize: 20,
@@ -223,12 +225,12 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Antialiasing",
+                          'Antialiasing',
                           style: TextStyle(fontSize: 16),
                         ),
                         Switch(
                           value: antialiasing,
-                          activeColor: Colors.teal,
+                          activeThumbColor: Colors.teal,
                           activeTrackColor: Colors.teal.shade200,
                           materialTapTargetSize:
                           MaterialTapTargetSize.shrinkWrap,
@@ -246,12 +248,12 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Smoothing",
+                          'Smoothing',
                           style: TextStyle(fontSize: 16),
                         ),
                         Switch(
                           value: smoothing,
-                          activeColor: Colors.teal,
+                          activeThumbColor: Colors.teal,
                           activeTrackColor: Colors.teal.shade200,
                           materialTapTargetSize:
                           MaterialTapTargetSize.shrinkWrap,
@@ -264,14 +266,14 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
 
                     const SizedBox(height: 10),
 
-                    // ACTION BUTTONS
+                    // Action Buttons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
                           onPressed: () => Navigator.pop(context),
                           child: const Text(
-                            "CANCEL",
+                            'CANCEL',
                             style: TextStyle(fontSize: 14),
                           ),
                         ),
@@ -279,9 +281,11 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                         TextButton(
                           onPressed: () async {
                             Navigator.pop(context);
+                            await service.setSmoothing(smoothing);
+                            await service.setAntialiasing(antialiasing);
                           },
                           child: const Text(
-                            "OK",
+                            'OK',
                             style: TextStyle(fontSize: 14),
                           ),
                         ),
