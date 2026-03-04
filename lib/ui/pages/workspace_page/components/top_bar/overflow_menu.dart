@@ -183,24 +183,19 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
     }
   }
 
-  Future<void> _advancedOptions(BuildContext context) async {
-
-    final service = AdvancedOptionsService();
-    bool antialiasing = await service.getAntialiasing();
-    bool smoothing = await service.getSmoothing();
-
+  void _advancedOptions(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: false,
-      builder: (_) {
-        return StatefulBuilder(
-          builder: (context, setState) {
+      builder: (dialogContext) {
+        return Consumer(
+          builder: (context, ref, _) {
+            final state = ref.watch(advancedOptionsProvider);
+
             return Dialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Container(
-                width: 300,
                 padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -209,33 +204,40 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Advanced settings',
+                        AppLocalizations.of(context).advancedOptions,
                         style: TextStyle(
-                          color: Colors.teal.shade700,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
+                          color: CustomColors.deepTeal,
+                          fontSize: FontSize.large,
                         ),
                       ),
                     ),
 
                     const SizedBox(height: 18),
 
-                    // Anti-aliasing Switch
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
                           'Antialiasing',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                              fontSize: FontSize.medium),
                         ),
                         Switch(
-                          value: antialiasing,
-                          activeThumbColor: Colors.teal,
-                          activeTrackColor: Colors.teal.shade200,
+                          value: state.antialiasing,
+                          activeThumbColor:
+                          CustomColors.deepTeal,
+                          activeTrackColor:
+                          CustomColors.oceanTeal,
                           materialTapTargetSize:
-                          MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (v) {
-                            setState(() => antialiasing = v);
+                          MaterialTapTargetSize
+                              .shrinkWrap,
+                          onChanged: (value) {
+                            ref
+                                .read(
+                                advancedOptionsProvider
+                                    .notifier)
+                                .setAntialiasing(value);
                           },
                         ),
                       ],
@@ -243,22 +245,30 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
 
                     const SizedBox(height: 6),
 
-                    // Smoothing Switch
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
                           'Smoothing',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                              fontSize: FontSize.medium),
                         ),
                         Switch(
-                          value: smoothing,
-                          activeThumbColor: Colors.teal,
-                          activeTrackColor: Colors.teal.shade200,
+                          value: state.smoothing,
+                          activeThumbColor:
+                          CustomColors.deepTeal,
+                          activeTrackColor:
+                          CustomColors.oceanTeal,
                           materialTapTargetSize:
-                          MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (v) {
-                            setState(() => smoothing = v);
+                          MaterialTapTargetSize
+                              .shrinkWrap,
+                          onChanged: (value) {
+                            ref
+                                .read(
+                                advancedOptionsProvider
+                                    .notifier)
+                                .setSmoothing(value);
                           },
                         ),
                       ],
@@ -266,27 +276,29 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
 
                     const SizedBox(height: 10),
 
-                    // Action Buttons
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment:
+                      MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () =>
+                              Navigator.pop(dialogContext),
                           child: const Text(
                             'CANCEL',
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(
+                                fontSize:
+                                FontSize.smallMedium),
                           ),
                         ),
                         const SizedBox(width: 8),
                         TextButton(
-                          onPressed: () async {
-                            Navigator.pop(context);
-                            await service.setSmoothing(smoothing);
-                            await service.setAntialiasing(antialiasing);
-                          },
+                          onPressed: () =>
+                              Navigator.pop(dialogContext),
                           child: const Text(
                             'OK',
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(
+                                fontSize:
+                                FontSize.smallMedium),
                           ),
                         ),
                       ],
