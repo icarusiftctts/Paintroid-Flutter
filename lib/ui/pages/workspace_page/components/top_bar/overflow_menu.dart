@@ -38,7 +38,7 @@ enum OverflowMenuOption {
       case OverflowMenuOption.saveProject:
         return localizations.saveProject;
       case OverflowMenuOption.advancedOptions:
-        throw ();
+        return localizations.advancedOptions;
     }
   }
 }
@@ -87,6 +87,7 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
         ioHandler.newImage(context, this);
         break;
       case OverflowMenuOption.advancedOptions:
+        _advancedOptions(context);
         break;
     }
   }
@@ -179,5 +180,17 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
         await db.projectDAO.insertProject(projectNew);
       }
     }
+  }
+
+  Future<void> _advancedOptions(BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return StatefulBuilder(
+              builder: (context, setState) {
+                return Dialog();
+          });
+        }
+    );
   }
 }
