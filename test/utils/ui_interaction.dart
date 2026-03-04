@@ -575,4 +575,9 @@ class UIInteraction {
   static double calculateShapePadding(double strokeWidth) {
     return (strokeWidth / 2) + _kShapeVisualPadding;
   }
+
+  static Future<void> openOverflowMenu() async {
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+  }
 }
