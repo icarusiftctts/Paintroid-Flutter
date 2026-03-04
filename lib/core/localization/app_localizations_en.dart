@@ -38,4 +38,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advancedOptions => 'Advanced Options';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get ok => 'Ok';
+
+  @override
+  String get antialiasing => 'Anti-aliasing';
+
+  @override
+  String get smoothing => 'Smoothing';
+
 }

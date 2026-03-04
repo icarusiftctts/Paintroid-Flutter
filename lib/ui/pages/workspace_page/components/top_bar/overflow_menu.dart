@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oxidized/oxidized.dart';
-import 'package:paintroid/core/utils/advanced_options_preference.dart';
 import 'package:toast/toast.dart';
 
 import 'package:paintroid/core/database/project_database.dart';
@@ -12,6 +11,7 @@ import 'package:paintroid/core/models/image_meta_data.dart';
 import 'package:paintroid/core/providers/object/file_service.dart';
 import 'package:paintroid/core/providers/object/io_handler.dart';
 import 'package:paintroid/core/providers/state/workspace_state_notifier.dart';
+import 'package:paintroid/core/utils/advanced_options_preference.dart';
 import 'package:paintroid/ui/shared/dialogs/overwrite_dialog.dart';
 import 'package:paintroid/ui/shared/dialogs/save_image_dialog.dart';
 import 'package:paintroid/ui/shared/pop_menu_button.dart';
@@ -218,9 +218,9 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                       mainAxisAlignment:
                       MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Antialiasing',
-                          style: TextStyle(
+                        Text(
+                        AppLocalizations.of(context).antialiasing,
+                          style: const TextStyle(
                               fontSize: FontSize.medium),
                         ),
                         Switch(
@@ -249,8 +249,8 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                       mainAxisAlignment:
                       MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Smoothing',
+                        Text(
+                        AppLocalizations.of(context).smoothing,
                           style: TextStyle(
                               fontSize: FontSize.medium),
                         ),
@@ -283,8 +283,8 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                         TextButton(
                           onPressed: () =>
                               Navigator.pop(dialogContext),
-                          child: const Text(
-                            'CANCEL',
+                          child: Text(
+                              AppLocalizations.of(context).cancel,
                             style: TextStyle(
                                 fontSize:
                                 FontSize.smallMedium),
@@ -294,8 +294,8 @@ class _OverflowMenuState extends ConsumerState<OverflowMenu> {
                         TextButton(
                           onPressed: () =>
                               Navigator.pop(dialogContext),
-                          child: const Text(
-                            'OK',
+                          child: Text(
+                            AppLocalizations.of(context).ok,
                             style: TextStyle(
                                 fontSize:
                                 FontSize.smallMedium),

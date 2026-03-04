@@ -159,11 +159,28 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get save;
 
-  ///No description provided for @advancedOptions.
   ///
   /// In en, this message translates to:
   /// **'Advanced Options'**
   String get advancedOptions;
+
+  ///
+  /// In en, this message translates to:
+  /// **'Anti-aliasing'**
+  String get antialiasing;
+
+  ///
+  /// In en, this message translates to:
+  /// **'Smoothing'**
+  String get smoothing;
+  ///
+  /// In en, this message translates to:
+  /// **'cancel'**
+  String get cancel;
+  ///
+  /// In en, this message translates to:
+  /// **'okay'**
+  String get ok;
 }
 
 class _AppLocalizationsDelegate

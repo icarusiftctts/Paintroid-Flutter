@@ -13,6 +13,8 @@ import 'package:paintroid/ui/pages/workspace_page/components/drawing_surface/exi
 import 'package:paintroid/ui/pages/workspace_page/components/top_bar/overflow_menu.dart';
 import 'package:paintroid/ui/shared/dialogs/save_image_dialog.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../utils/canvas_positions.dart';
 import '../utils/ui_interaction.dart';
 
@@ -26,6 +28,9 @@ void main() {
   late AppLocalizations localizations;
 
   setUp(() async {
+
+    SharedPreferences.setMockInitialValues({});
+
     sut = ProviderScope(
       child: App(
         showOnboardingPage: false,
@@ -175,6 +180,36 @@ void main() {
 
       expect(find.byType(AppBar), findsNothing);
       expect(find.byType(ExitFullscreenButton), findsOneWidget);
+    });
+  }
+
+  if (testID == -1 || testID == 10) {
+    testWidgets('[OVERFLOW_MENU]: Advanced Options dialog works', (tester) async {
+      await initializeAppAndLocalizations(tester);
+
+      await tester.tap(find.byIcon(Icons.more_vert));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(localizations.advancedOptions));
+      await tester.pumpAndSettle();
+
+      expect(find.text(localizations.advancedOptions), findsOneWidget);
+      expect(find.text(localizations.antialiasing), findsOneWidget);
+      expect(find.text(localizations.smoothing), findsOneWidget);
+
+      final switches = tester.widgetList<Switch>(find.byType(Switch)).toList();
+      expect(switches.length, 2);
+
+      expect(switches[0].value, false);
+      expect(switches[1].value, false);
+
+      await tester.tap(find.byType(Switch).first);
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(localizations.ok));
+      await tester.pumpAndSettle();
+
+      expect(find.text(localizations.advancedOptions), findsNothing);
     });
   }
 
